@@ -13,7 +13,7 @@ public class InteractiveTouchControl : MonoBehaviour
 
     [SerializeField]
     protected int touchIndex;
-    /// Set 'fingerNumber' to 0 in the Inspector for the button to interact with the first finger that touches the screen. 
+    /// Set 'touchIndex' to 0 in the Inspector for the button to interact with the first finger that touches the screen. 
     /// Set it to 1 for the button to interact with the second finger that touches the screen, and so on. 
 
     [SerializeField]
