@@ -24,11 +24,6 @@
 
 //Set up the menu control type to use the keyboard, the controller, or both.
 
-//Keyboard Input Type: Mandatory: Set up 4 new inputs in the Input Manager, and call them Keyboard Up, Keyboard Down, Keyboard Left, and Keyboard Right.
-//Set their primary and secondary inputs to whatever you'd like to use as keyboard direction up (W, Up Arrow), keyboard direction down (S, Down Arrow) and so on.
-//Errors may occur if you don't do this.
-//When that's set up, set the Keyboard Input Type to Generic (for KeyCodes) or Button (for the buttons you just set up).
-
 //Once you are set up, enter Playmode. 
 //Then, depending on how you've set up your menu, use the corresponding directional inputs (arrow keys, controller thumbsticks, etc) and watch the Current Selection change.
 
@@ -50,8 +45,6 @@ public enum ControlType { Keyboard, Controller, Both }                          
                                                                                     //Ideally, the player should be able to alter this themselves by use of an Options menu in game. 
                                                                                     
 public enum KeyType { GenericKeyCode, Button}                                       //For keyboard inputs, do you want to use the generic GetKeyDown, or the non generic GetButtonDown?
-                                                                                    //Bear in mind that you'll have to add Inputs to the Input Manager titled Keyboard Up, Keyboard Down, etc...
-                                                                                    //(see the method 'KeyboardScroll' for details)
 #endregion
 
 public class MenuSystem1D : MonoBehaviour
@@ -140,20 +133,16 @@ public class MenuSystem1D : MonoBehaviour
         //OR if the input type is 'Button' and the user presses the corresponding button,
         //increment or decrement Selection ID depending on the orientation of the menu.
 
-        if ((keyboardInputType == KeyType.GenericKeyCode && (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)))
-            || (keyboardInputType == KeyType.Button && Input.GetButtonDown("Keyboard Down")))
+        if ((keyboardInputType == KeyType.GenericKeyCode && (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))))
             switch (menuOrientation) { case Axis.PlusYToMinusY: Scroll(Operator.Plus); break; case Axis.MinusYToPlusY: Scroll(Operator.Minus); break; }
 
-        if ((keyboardInputType == KeyType.GenericKeyCode && (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)))
-            || (keyboardInputType == KeyType.Button && Input.GetButtonDown("Keyboard Up")))
+        if ((keyboardInputType == KeyType.GenericKeyCode && (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))))
             switch (menuOrientation) { case Axis.PlusYToMinusY: Scroll(Operator.Minus); break; case Axis.MinusYToPlusY: Scroll(Operator.Plus); break; }
 
-        if ((keyboardInputType == KeyType.GenericKeyCode && (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)))
-            || (keyboardInputType == KeyType.Button && Input.GetButtonDown("Keyboard Right")))
+        if ((keyboardInputType == KeyType.GenericKeyCode && (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))))
             switch (menuOrientation) { case Axis.MinusXToPlusX: Scroll(Operator.Plus); break; case Axis.PlusXToMinusX: Scroll(Operator.Minus); break; }
 
-        if ((keyboardInputType == KeyType.GenericKeyCode && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)))
-            || (keyboardInputType == KeyType.Button && Input.GetButtonDown("Keyboard Left")))
+        if ((keyboardInputType == KeyType.GenericKeyCode && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))))
             switch (menuOrientation) { case Axis.MinusXToPlusX: Scroll(Operator.Minus); break; case Axis.PlusXToMinusX: Scroll(Operator.Plus); break; }
     }
 
