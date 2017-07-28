@@ -1,6 +1,4 @@
-﻿//System by Michael Vakharia. 
 //Email: michael@bluecarbonmedia.co.uk 
-//LinkedIn: https://uk.linkedin.com/in/michaelvakharia
 
 #region Introduction
 //This system allows for the use of a keyboard or controller to scroll between and highlight multiple options aligned horizontally or vertically, 
