@@ -1,6 +1,5 @@
-﻿///A namespace containing most of the functionality for the Yu-Gi-Oh card game, 
-///including classes for every monster type to date, 
-///and most of the attributes you can find on your average monster, as enums.
+﻿///A namespace containing monster classes for the Yu-Gi-Oh card game, 
+///with most of the attributes you can find on your average monster, as enums.
 
 ///The namespace is best suited for Unity, but you want to use it for something else, 
 ///you can amend that by removing the 'using' statement, the 'SerializeField' attributes, 
@@ -8,11 +7,11 @@
 ///If I've missed anything, you'll likely find it.
 
 ///This was done up in about 3 hours as a fun little exercise, 
-///and for this reason it's missing some functionalty. 
+///and for this reason it's not quite complete. 
 
 ///Feel free to finish it off and commit it to GitHub: see http://yugioh.wikia.com/wiki/Attribute 
 ///and scroll down to 'Gameplay and Terminology', 
-///then hit 'Show' to see a full list of the things you might like to add. 
+///then hit 'Show' to see a full list of the things you might like to add.
 
 using UnityEngine;
 
