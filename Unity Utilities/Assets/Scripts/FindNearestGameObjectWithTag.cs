@@ -6,6 +6,12 @@ using UnityEditor;
 /// in order to find the one that is closest to the object that this script is on. 
 /// </summary>
 
+/// <summary>
+/// Since the core method should be run in one or more of multiple different ways, depending on your software's needs,
+/// a way to control this has been implemented for your ease of use.
+/// </summary>
+public enum MethodRunTime { Never, OnStart, OnUpdate, OnUserCall }
+
 public class FindNearestGameObjectWithTag : MonoBehaviour
 {
     [SerializeField]
@@ -23,8 +29,30 @@ public class FindNearestGameObjectWithTag : MonoBehaviour
     [SerializeField][ReadOnly][Header("Distance to nearest object:")]
     protected float NearestObjectDistance;
 
-    public void Update ()
+    [SerializeField][Header("When will this method run?")]
+    protected MethodRunTime methodRunTime = MethodRunTime.Never;
+
+    private void Start()
     {
+        if(methodRunTime != MethodRunTime.OnStart)  ///If the method isn't set to run on the first frame,
+            return;                                 ///don't run it here (cancel out of this function). 
+
+        FindClosestObject();                        ///Otherwise, run it here. 
+    }
+
+    private void Update()
+    {
+        if (methodRunTime != MethodRunTime.OnUpdate)///If the method isn't set to run on the first frame,
+            return;                                 ///don't run it here (cancel out of this function). 
+
+        FindClosestObject();                        ///Otherwise, run it here on every frame. 
+    }
+
+    public void FindClosestObject ()
+    {
+        if (methodRunTime == MethodRunTime.Never)   ///If the method is set to never run,
+            return;                                 ///drop out of this method before it starts.
+
         GameObject[] possibleObjects = GameObject.FindGameObjectsWithTag(objectTag);
         /// Populates an array with all of the objects tagged with the object tag, defined above and in the Unity editor. 
 
@@ -47,8 +75,8 @@ public class FindNearestGameObjectWithTag : MonoBehaviour
                 
                 NearestObjectDistance = distanceToObject;
 
-                /// In the second iteration, it will check if the 'next object*' in the list is closer than the first one, 
-                ///and if it is, 'currentShortestDistance' will change to the distance between this object and that 'next object*'. 
+                /// In the second iteration, it will check if the next object* in the list is closer than the first one, 
+                ///and if it is, 'currentShortestDistance' will change to the distance between this object and that next object*. 
 
                 /// This will continue indefinitely as long as there are nearer objects to be found. 
                 /// Once there are no more, the conditional for the 'if' statement we're in right now will no longer be met, 
@@ -57,8 +85,6 @@ public class FindNearestGameObjectWithTag : MonoBehaviour
                 _closestObject = anObject;
             }
         }
-        ///You'll want to run this method in the Update function if the position of this object changes constantly,
-        ///or if the positions of the objects in the list do the same. 
     }
 }
 
