@@ -1,58 +1,76 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-/// <summary>
-/// Sorts through an array of objects tagged by the user, 
+/// Sorts through an array of objects tagged by the user,
 /// in order to find the one that is closest to the object that this script is on. 
-/// </summary>
 
-/// <summary>
-/// Since the core method should be run in one or more of multiple different ways, depending on your software's needs,
-/// a way to control this has been implemented for your ease of use.
+///<summary>
+///At what time should the method run?
 /// </summary>
 public enum MethodRunTime { Never, OnStart, OnUpdate, OnUserCall }
 
 public class FindNearestGameObjectWithTag : MonoBehaviour
 {
+    /// <summary>
+    /// Tag all of the objects you would like to sort through to find the nearest one, then enter the tag into this string field.
+    /// </summary>
     [SerializeField]
     [Header("Tag of objects to locate:")]
     protected string objectTag;
-    /// Tag all of the objects you would like to sort through to find the nearest one, then enter the tag into this string field.
 
+    /// <summary>
+    /// This field will be populated with the nearest object once it is located. Can change every frame.
+    /// </summary>
     [SerializeField][Header("Closest object this frame:")]
     protected GameObject _closestObject;
-    ///This field will be populated with the nearest object once it is located. Can change every frame.
-    
-    public GameObject closestObject { get { return _closestObject; } protected set { _closestObject = value; } }
-    /// Use this to access the closest object from other scripts. 
 
+    /// <summary>
+    /// Use this property to access the closest object from other scripts. 
+    /// </summary>
+    public GameObject closestObject { get { return _closestObject; } protected set { _closestObject = value; } }
+    
+    /// <summary>
+    /// The distance to the nearest object tagged with the string in the field 'objectTag'. 
+    /// </summary>
     [SerializeField][ReadOnly][Header("Distance to nearest object:")]
     protected float NearestObjectDistance;
 
     [SerializeField][Header("When will this method run?")]
     protected MethodRunTime methodRunTime = MethodRunTime.Never;
 
+    /// <summary>
+    /// If the method isn't set to run on the first frame, don't run it here. Otherwise, do so. 
+    /// </summary>
     private void Start()
     {
-        if(methodRunTime != MethodRunTime.OnStart)  ///If the method isn't set to run on the first frame,
-            return;                                 ///don't run it here (cancel out of this function). 
-
-        FindClosestObject();                        ///Otherwise, run it here. 
+        if(methodRunTime != MethodRunTime.OnStart)
+        {
+            return;
+        }                    
+        FindClosestObject();                        
     }
 
+    /// <summary>
+    /// If the method isn't set to run on every frame, don't run it here. Otherwise, do so. 
+    /// </summary>
     private void Update()
     {
-        if (methodRunTime != MethodRunTime.OnUpdate)///If the method isn't set to run on the first frame,
-            return;                                 ///don't run it here (cancel out of this function). 
-
-        FindClosestObject();                        ///Otherwise, run it here on every frame. 
+        if (methodRunTime != MethodRunTime.OnUpdate)
+        {
+            return;
+        }
+        FindClosestObject();                        
     }
 
+    /// <summary>
+    /// The core method. Populates the GameObject '_closestObject' with the nearest GameObject (based on distance)
+    /// tagged with the string in the field 'objectTag'.
+    /// </summary>
     public void FindClosestObject ()
     {
         if (methodRunTime == MethodRunTime.Never)   ///If the method is set to never run,
             return;                                 ///drop out of this method before it starts.
-
+        
         GameObject[] possibleObjects = GameObject.FindGameObjectsWithTag(objectTag);
         /// Populates an array with all of the objects tagged with the object tag, defined above and in the Unity editor. 
 
