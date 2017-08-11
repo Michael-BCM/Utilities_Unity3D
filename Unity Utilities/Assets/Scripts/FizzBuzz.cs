@@ -11,10 +11,21 @@
 
 public class FizzBuzz : MonoBehaviour
 {
+    /// <summary>
+    /// The highest number to count to. 
+    /// </summary>
     [SerializeField][Header("Number to count to:")]
     private int highestNumber;
+
+    /// <summary>
+    /// A list of multiples. Each is paired with the word that will take its place.
+    /// </summary>
     [SerializeField][Header("Multiples and substitutions")]
     private FizzBuzzPair[] fizzBuzzPairs;
+
+    /// <summary>
+    /// For iterating through the loop, and for printing out numbers that have no substitutions. 
+    /// </summary>
     private static int currentNumber;
 
     private void Start()
